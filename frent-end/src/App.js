@@ -1,15 +1,16 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import Features from './Features/Features';
-import ForgotPassword from './ForgotPassword/Forgotpassword';
-import HomePage from './HomePage/HomePage';
-import HomePageIndex from './HomePage/HomePageIndex';
-import SignIn from './SignIn/SignIn';
-import SignUp from './SignUp/SignUp';
-import Step1 from './SignUp/Steps/Step1';
-import Step2 from './SignUp/Steps/Step2';
-import Step3 from './SignUp/Steps/Step3';
+import Features from './Components/Features/Features';
+import ForgotPassword from './Components/ForgotPassword/Forgotpassword';
+import HomePage from './Components/HomePage/HomePage';
+import HomePageIndex from './Components/HomePage/HomePageIndex';
+import Products from './Components/Products/Products';
+import SignIn from './Components/SignIn/SignIn';
+import SignUp from './Components/SignUp/SignUp';
+import Step1 from './Components/SignUp/Steps/Step1';
+import Step2 from './Components/SignUp/Steps/Step2';
+import Step3 from './Components/SignUp/Steps/Step3';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path='/' element={<HomePage />} >
           <Route index element={<HomePageIndex />} />
           <Route path='features' element={<Features />} />
+          <Route path='Products' element={<Products />} />
         </Route>
         <Route path='SignUp' element={<SignUp />} >
           <Route index element={<Step1 />} />
@@ -26,6 +28,7 @@ function App() {
         </Route>
         <Route path='SignIn' element={<SignIn />} />
         <Route path='/ForgotPassword' element={<ForgotPassword />} />
+        
       </Routes>
       
       {/*  */}

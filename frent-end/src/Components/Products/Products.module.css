@@ -1,0 +1,95 @@
+.parent{
+    background-color: #f9f9f9;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.content{
+    width: 80%;
+    margin: auto;
+    display:flex;
+    gap: 5%;
+}
+.filterZone{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin-top: 5%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    position: sticky;
+    top: 0;
+}
+.filterZone>div{
+    padding-left: 40px;
+    border-top: 1px solid rgb(240, 240, 240);
+}
+.filterZone>div:first-of-type{
+    border-top: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.filterZone>div:first-of-type p {
+    font-size: large;
+    font-weight: bolder;
+}
+.filterZone>div>p{
+    font-size: medium;
+    font-weight: 500;
+}
+.filterZone button{
+    background-color: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    width: 30px;
+    background-color: white;
+    color: rgb(174, 133, 213);
+    margin-right: 20px;
+    border-radius: 20px;
+    font-size: large;
+    font-weight: bold;
+
+}
+.filtericon{
+    font-size: 20px;
+    margin-right: 20px;
+}
+.filterZone button:active{
+    color: rgb(80, 0, 155);
+}
+.formgroupe{
+    gap: 0px;
+    padding: 5px;
+}
+.formlabel{
+    font-size: small;
+}
+
+.list{
+    width: 70%;
+    display:grid;
+    grid-template-columns: repeat(1,1fr);
+    gap: 20px;
+    margin-top: 5%;
+}
+
+.sort {
+    display:flex;
+    justify-content: space-between;
+    padding: 5px;
+
+}
+.product{
+    display:flex;
+    width: 100%;
+    background-color: white;
+    justify-content: space-between;
+}
+.product>div:first-of-type{
+    width: 30%;
+}
+.product>div img{
+    width: 50px;
+}
