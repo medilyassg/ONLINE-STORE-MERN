@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Conatct from './Components/Contact/Conatct';
 import Features from './Components/Features/Features';
 import ForgotPassword from './Components/ForgotPassword/Forgotpassword';
 import HomePage from './Components/HomePage/HomePage';
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<HomePageIndex />} />
           <Route path='features' element={<Features />} />
           <Route path='Products' element={<Products />} />
+          <Route path='contact' element={<Conatct />} />  
         </Route>
         <Route path='SignUp' element={<SignUp />} >
           <Route index element={<Step1 />} />
