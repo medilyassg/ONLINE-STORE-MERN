@@ -3,22 +3,28 @@
     width: 100%;
     height: 100%;
     display: flex;
+    padding-bottom:50vh ;
 }
 .content{
     width: 80%;
     margin: auto;
     display:flex;
     gap: 5%;
+    justify-content: space-between;
 }
 .filterZone{
     display: flex;
     flex-direction: column;
-    width: 25%;
-    margin-top: 5%;
+    width: 20%;
+    margin-top: 1%;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
-    position: sticky;
-    top: 0;
+    position: fixed ;
+    top: 1;
+}
+.filterZone>*{
+    margin: 0;
+    padding: 0;
 }
 .filterZone>div{
     padding-left: 40px;
@@ -61,7 +67,8 @@
 }
 .formgroupe{
     gap: 0px;
-    padding: 5px;
+    padding-left:5px ;
+    background-color: #fff;
 }
 .formlabel{
     font-size: small;
@@ -69,27 +76,73 @@
 
 .list{
     width: 70%;
-    display:grid;
-    grid-template-columns: repeat(1,1fr);
-    gap: 20px;
+    margin-top: 2%;
+    margin-left: 30%;
+}
+
+.products{
     margin-top: 5%;
+    display: grid;
+    grid-template-columns: (1,1fr);
+    gap: 20px;
 }
 
 .sort {
     display:flex;
     justify-content: space-between;
     padding: 5px;
-
+    height: 10vh;
 }
 .product{
     display:flex;
     width: 100%;
     background-color: white;
     justify-content: space-between;
+    height: fit-content;
+    gap: 20px;
 }
-.product>div:first-of-type{
+.imagezone{
     width: 30%;
 }
-.product>div img{
-    width: 50px;
+.imagezone img{
+    padding: 10%;
+    width: 90%;
+    height: 90%;
+}
+.productInfo{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.product p {
+    padding: 0;
+}
+.productName{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
+.icon{
+    position: static;
+    z-index: 10;
+
+}
+.category{
+    color: #999;
+    margin-top: -10px;
+    margin-bottom: -10px;
+}
+.price{
+    margin-top: -5px;
+    margin-bottom: -10px;
+    font-size: x-large;
+    font-weight: bold;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+.description{
+    color: #777;
+    font-weight: 500;
 }
