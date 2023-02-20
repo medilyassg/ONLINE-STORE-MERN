@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
+import Dashboard from './Components/AdminDashbord/Dashbord';
 import Conatct from './Components/Contact/Conatct';
 import Features from './Components/Features/Features';
 import ForgotPassword from './Components/ForgotPassword/Forgotpassword';
@@ -30,6 +31,7 @@ function App() {
         </Route>
         <Route path='SignIn' element={<SignIn />} />
         <Route path='/ForgotPassword' element={<ForgotPassword />} />
+        <Route path="/dashbord" element={<Dashboard />} />
         
       </Routes>
       
