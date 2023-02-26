@@ -46,9 +46,7 @@ function App() {
         
       </Routes>
       
-      {/*  */}
-      {/* <SignIn /> */}
-      {/* <ForgotPassword /> */}
+      
     </React.Fragment>
   );
 }

@@ -1,0 +1,43 @@
+
+.customers{
+    background-color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    font-family: cursive;
+}
+.list{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    width: 90%;
+    margin: auto;
+    gap: 20px;
+}
+
+.customer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    border-radius: 20px;
+}
+.customerimg{
+    width: 30%;
+}
+.customerimg img{
+    width: 100%;
+}
+.customerinfo{
+    width: 60%;
+    
+}
+.customerinfo h3{
+    text-transform: capitalize;
+}
+.customerinfo p {
+    padding-left:20px ;
+    font-size: small;
+}
+

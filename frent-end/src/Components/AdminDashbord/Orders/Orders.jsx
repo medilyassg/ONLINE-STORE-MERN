@@ -6,6 +6,14 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from '../Title';
+import Paper from '@mui/material/Paper';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import FormDialog from './UpdateOrder';
+import { Button } from '@mui/material';
+
+
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
@@ -53,17 +61,52 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
+  const [value, setValue] = React.useState('one');
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <React.Fragment>
-      <Title>Recent Orders</Title>
+      <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column',gap:"10px" }}>
+      <Title>Orders List </Title>
+
+      <Box sx={{ width: '100%' }}>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        textColor="secondary"
+        indicatorColor="secondary"
+        aria-label="secondary tabs example"
+      >
+        <Tab value="one" label="All Orders" />
+        <Tab value="for" label="New" />
+        <Tab value="two" label="Completed" />
+        <Tab value="three" label="Conceled" />
+      </Tabs>
+    </Box>
+
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
+            <TableCell>Order ID</TableCell>
+            <TableCell>Customer</TableCell>
+            <TableCell>Order</TableCell>
             <TableCell>Payment Method</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            
+            <TableCell>Delivery Date</TableCell>
+            <TableCell >Delivery Date</TableCell>
+            <TableCell >Delivery Status</TableCell>
+
           </TableRow>
         </TableHead>
         <TableBody>
@@ -74,13 +117,16 @@ export default function Orders() {
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
               <TableCell align="right">{`$${row.amount}`}</TableCell>
+              <TableCell><Button variant="outlined" onClick={handleClickOpen}>
+        update
+      </Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
-      </Link>
+            <FormDialog open={open} close={handleClose} />
+      </Paper>
+
     </React.Fragment>
   );
 }

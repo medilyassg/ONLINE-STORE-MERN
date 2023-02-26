@@ -1,0 +1,61 @@
+.products{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px;
+    background-color: rgb(250,251,252);
+}
+.head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #243b67;
+}
+.head button{
+    font-size: small;
+    font-weight: bold;
+    color: white;
+    padding: 15px;
+    background-color: rgb(81,140,255);
+    outline: none;
+    border: none;
+    border-radius: 20px;
+}
+.head button:active{
+    background-color: rgb(142, 65, 215);
+}
+
+.statistics{
+    display: flex;
+    gap: 40px;
+    width: 60%;
+}
+.statistics>div{
+    border-right: 1px solid #999 ;
+    padding: 10px;
+    height: 60px;
+}
+.statistics>div:last-of-type{
+    border-right: none;
+}
+.statistics>div p{
+    padding: 0;
+    margin: 0;
+}
+.statistics>div p:first-of-type{
+    color: #243b67;
+    font-size: large;
+    font-weight: 400;
+}
+
+.statistics>div p:last-of-type{
+    color: rgb(81,140,255);
+    font-size: x-large;
+    font-weight: bold;
+    padding-left: 20px;
+}
+.filter{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
