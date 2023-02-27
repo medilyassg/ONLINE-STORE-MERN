@@ -4,15 +4,27 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import style from './Products.module.css'
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Edit from '../EditProduc/Edit';
 export default function Productslist() {
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  const [open, setOpen] = React.useState(false);
+
+  
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
 
   return (
     <div className={style.products}>
@@ -96,10 +108,10 @@ export default function Productslist() {
             <p className={style.inventory}>45</p>
             <p className={style.date}>2018/01/23</p>
             <div>
-            <IconButton variant="soft" color='error'>
+            <IconButton variant="soft" color='error' >
               <DeleteOutlineIcon  />
             </IconButton>
-            <IconButton variant="soft" color='success'>
+            <IconButton variant="soft" color='success' onClick={handleClickOpen}>
               <ModeEditIcon  />
             </IconButton>
             </div>
@@ -115,7 +127,7 @@ export default function Productslist() {
             <IconButton variant="soft" color='error'>
               <DeleteOutlineIcon  />
             </IconButton>
-            <IconButton variant="soft" color='success'>
+            <IconButton variant="soft" color='success'onClick={handleClickOpen} >
               <ModeEditIcon  />
             </IconButton>
             </div>
@@ -131,7 +143,7 @@ export default function Productslist() {
             <IconButton variant="soft" color='error'>
               <DeleteOutlineIcon  />
             </IconButton>
-            <IconButton variant="soft" color='success'>
+            <IconButton variant="soft" color='success' onClick={handleClickOpen}>
               <ModeEditIcon  />
             </IconButton>
             </div>
@@ -139,6 +151,7 @@ export default function Productslist() {
           </div>
         </div>
       </div>
+      <Edit open={open} close={handleClose} />
     </div>
   )
 }
