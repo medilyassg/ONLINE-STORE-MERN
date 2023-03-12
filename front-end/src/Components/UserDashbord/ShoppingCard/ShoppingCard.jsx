@@ -1,49 +1,41 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
-import IconButton from '@mui/material/IconButton';
+import React from 'react';
+import styles from './ShoppingCart.module.css';
 
-
-
-export default function Card() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (
-      event &&
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
-
-  const list = (anchor) => (
-    <Box
-      sx={{ width: 800 }}
-      role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
-    >
-        
-     
-      
-    </Box>
+function ShoppingCart(props) {
+  const totalPrice = props.cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
   );
 
   return (
-    <div>
-      
-        
-      
+    <div className={styles.container}>
+      <h2 className={styles.title}>Shopping Cart</h2>
+      <div className={styles.cart}>
+        {props.cart.map((item) => (
+          <div className={styles.item} key={item.id}>
+            <img className={styles.image} src={item.image} alt={item.name} />
+            <div className={styles.details}>
+              <h3 className={styles.name}>{item.name}</h3>
+              <p className={styles.price}>
+                Price: ${item.price.toFixed(2)}
+              </p>
+              <p className={styles.quantity}>Quantity: {item.quantity}</p>
+              <button
+                className={styles.removeButton}
+                onClick={() => props.removeItem(item.id)}
+              >
+                Remove
+              </button>
+            </div>
+          </div>
+        ))}
+        <div className={styles.total}>
+          <p className={styles.totalLabel}>Total:</p>
+          <p className={styles.totalPrice}>${totalPrice.toFixed(2)}</p>
+        </div>
+      </div>
     </div>
   );
 }
+
+export default ShoppingCart;

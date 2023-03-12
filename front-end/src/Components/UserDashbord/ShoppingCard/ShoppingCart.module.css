@@ -1,0 +1,80 @@
+.container {
+    margin: 0 auto;
+    max-width: 600px;
+  }
+  
+  .title {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  .cart {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .item {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid #ccc;
+  }
+  
+  .image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  .details {
+    flex: 1;
+  }
+  
+  .name {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .price {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .quantity {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+  
+  .removeButton {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    background-color: #ff4b4b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .total {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+  }
+  
+  .totalLabel {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+  
+  .totalPrice {
+    margin: 0;
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  

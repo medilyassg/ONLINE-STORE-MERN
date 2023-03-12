@@ -18,6 +18,13 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import Card from './ShoppingCard';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import Products from '../../Products/Products';
+import ShoppingCart from './ShoppingCard';
+
+
+
+
+
 
 
 
@@ -62,6 +69,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function UserDashbord() {
+  
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -195,8 +203,8 @@ export default function UserDashbord() {
 
   return (
     <>
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1 ,backgroundColor:"white" }} >
+      <AppBar position="fixed" sx={{ backgroundColor:"blueviolet" }}>
         <Toolbar>
           <IconButton
             size="large"
@@ -273,9 +281,13 @@ export default function UserDashbord() {
             onClose={toggleDrawer('right', false)}
             onOpen={toggleDrawer('right', true)}
           >
+
             {list('right')}
           </SwipeableDrawer>
         </React.Fragment>
+        <div style={{ marginTop:"12vh" }}>
+          <Products />
+        </div>
     </>
   );
 }
