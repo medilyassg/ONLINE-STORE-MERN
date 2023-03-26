@@ -1,82 +1,100 @@
-const express = require('express');
-const router = express.Router();
-const Product = require('../models/product');
+const express=require("express");
+const router=express.Router();
+const Product=require('../models/product');
+const multer=require('multer');
+filename='';
 
-// GET all products
-router.get('/', async (req, res) => {
-  try {
-    const products = await Product.find();
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// GET one product
-router.get('/:id', getProduct, (req, res) => {
-  res.json(res.product);
-});
-
-// CREATE a product
-router.post('/', async (req, res) => {
-  const product = new Product({
-    name: req.body.name,
-    price: req.body.price,
-    description: req.body.description
-  });
-
-  try {
-    const newProduct = await product.save();
-    res.status(201).json(newProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// UPDATE a product
-router.patch('/:id', getProduct, async (req, res) => {
-  if (req.body.name != null) {
-    res.product.name = req.body.name;
-  }
-  if (req.body.price != null) {
-    res.product.price = req.body.price;
-  }
-  if (req.body.description != null) {
-    res.product.description = req.body.description;
-  }
-
-  try {
-    const updatedProduct = await res.product.save();
-    res.json(updatedProduct);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// DELETE a product
-router.delete('/:id', getProduct, async (req, res) => {
-  try {
-    await res.product.remove();
-    res.json({ message: 'Product deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Middleware to get a product by ID
-async function getProduct(req, res, next) {
-  let product;
-  try {
-    product = await Product.findById(req.params.id);
-    if (product == null) {
-      return res.status(404).json({ message: 'Product not found' });
+const mystorage=multer.diskStorage({
+    destination:'./uploads',
+    filename:(req,file,redirect)=>{
+        let date=Date.now();
+        let f1=date + '.' + file.mimetype.split('/')[1];
+        redirect(null,f1);
+        filename=f1;
     }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
+})
+const upload=multer({storage:mystorage});
 
-  res.product = product;
-  next();
-}
 
-module.exports = router;
+router.post('/addProduct',upload.any('imageUrl'),(req,res)=>{
+    data=req.body;
+    prod=new Product(data);
+    prod.imageUrl=filename;
+    prod.save()
+    
+    .then(
+     (savedProduct)=>{
+         res.status(200).send(savedProduct)
+         //filename='';
+     }
+    )
+    .catch(
+     (err)=>{
+         res.status(400).send(err)
+     })
+ });
+ 
+ router.get('/getall',(req,res)=>{
+    Product.find()
+    .then(
+        (products)=>{
+            res.status(200).send(products);
+        }
+    )
+    .catch(
+        (err)=>{
+            res.status(400).send(err)
+        }
+    )
+})
+
+router.get('/getidproduct/:id',(req,res)=>{
+    myid=req.params.id;
+    Product.findOne({_id:myid})
+    .then(
+        (product)=>{
+            res.status(200).send(product);
+        }
+    ).catch(
+        (err)=>{
+            res.status(400).send(err)
+        }
+    )
+})
+
+router.put('/update/:id',(req,res)=>{
+    id=req.params.id;
+    newData=req.body;
+    Product.findByIdAndUpdate({_id:id},newData)
+    .then(
+        (updated)=>{
+            res.status(200).send(updated);
+        }
+    ).catch(
+        (err)=>{
+            res.status(400).send(err)
+        }
+    )
+})
+
+
+router.delete('/deletebyid/:id',(req,res)=>{
+    id=req.params.id;
+    Product.findOneAndDelete({_id:id})
+    .then(
+        (deleteProduct)=>{
+            res.status(200).send(deleteProduct);
+        }
+    ).catch(
+        (err)=>{
+            res.status(400).send(err)
+        }
+    )
+})
+
+
+
+
+
+
+module.exports=router;

@@ -3,11 +3,12 @@ const Schema = mongoose.Schema;
 
 // Define the command schema
 const commandSchema = new Schema({
-  user: {
+  user: [{
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true
-  },
+  }
+],
   products: [
     {
       type: Schema.Types.ObjectId,

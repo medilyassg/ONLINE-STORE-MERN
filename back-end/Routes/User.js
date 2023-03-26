@@ -1,86 +1,112 @@
-const express = require('express');
-const router = express.Router();
-const User = require('../models/user');
+const express=require("express");
+const router=express.Router();
+const User=require('../models/user');
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken')
 
-// GET all users
-router.get('/', async (req, res) => {
-  try {
-    const users = await User.find();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
-// GET one user
-router.get('/:id', getUser, (req, res) => {
-  res.json(res.user);
-});
 
-// CREATE a user
-router.post('/', async (req, res) => {
-  const user = new User({
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
-    role: req.body.role
-  });
+ router.post('/register',async(req,res)=>{
+    data=req.body;
+    const usr=new User(data);
+    salt=bcrypt.genSaltSync(10);
+    cryptPass=await bcrypt.hashSync(data.password,salt);
+    usr.password=cryptPass;
+    usr.save()
+        .then(
+            (saved)=>{
+                res.status(200).send(saved)
+            }
+        )
+        .catch(
+            (err)=>{
+                res.status(500).send(err)
+            }
+        )
+ })
 
-  try {
-    const newUser = await user.save();
-    res.status(201).json(newUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// UPDATE a user
-router.patch('/:id', getUser, async (req, res) => {
-  if (req.body.name != null) {
-    res.user.name = req.body.name;
-  }
-  if (req.body.email != null) {
-    res.user.email = req.body.email;
-  }
-  if (req.body.password != null) {
-    res.user.password = req.body.password;
-  }
-  if (req.body.role != null) {
-    res.user.role = req.body.role;
-  }
-
-  try {
-    const updatedUser = await res.user.save();
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// DELETE a user
-router.delete('/:id', getUser, async (req, res) => {
-  try {
-    await res.user.remove();
-    res.json({ message: 'User deleted successfully' });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
-
-// Middleware to get a user by ID
-async function getUser(req, res, next) {
-  let user;
-  try {
-    user = await User.findById(req.params.id);
-    if (user == null) {
-      return res.status(404).json({ message: 'User not found' });
+ router.post('/login',async(req,res)=>{
+    data=req.body;
+    user= await User.findOne({email:data.email})
+    if(!user){
+        res.status(404).send("Invalid email or password");
+    }else{
+        validPass=bcrypt.compareSync(data.password,user.password)
+        if(!validPass){
+            res.status(401).send("Invalid email or password");
+        }else{
+            payload={
+                _id:user._id,
+                email:user.email,
+                name:user.name
+            }
+            token=jwt.sign(payload,'11111')
+            res.status(200).send({mytoken:token})
+        }
     }
-  } catch (err) {
-    return res.status(500).json({ message: err.message });
-  }
+ })
+ 
+ 
+ 
+ router.get('/getall',(req,res)=>{
+     User.find()
+     .then(
+         (users)=>{
+             res.status(200).send(users);
+         }
+     )
+     .catch(
+         (err)=>{
+             res.status(200).send(err)
+         }
+     )
+ })
+ 
+ router.get('/getbyid/:name',(req,res)=>{
+     myid=req.params.name;
+     User.findOne({name:myid})
+     .then(
+         (user)=>{
+             res.send(user);
+         }
+     ).catch(
+         (err)=>{
+             res.send(err)
+         }
+     )
+ })
+ 
+ router.put('/put/:id',(req,res)=>{
+     id=req.params.id;
+     newData=req.body;
+     User.findByIdAndUpdate({_id:id},newData)
+     .then(
+         (updated)=>{
+             res.send(updated);
+         }
+     ).catch(
+         (err)=>{
+             res.send(err)
+         }
+     )
+ })
+ 
+ router.delete('/delete/:id',(req,res)=>{
+     id=req.params.id;
+     User.findOneAndDelete({_id:id})
+     .then(
+         (deleteUser)=>{
+             res.send(deleteUser);
+         }
+     ).catch(
+         (err)=>{
+             res.send(err)
+         }
+     )
+ })
 
-  res.user = user;
-  next();
-}
 
-module.exports = router;
+
+
+
+module.exports=router;
