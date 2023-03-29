@@ -38,7 +38,7 @@ router.get('/getall', async (req, res) => {
   });
 
   // UPDATE a command
-  router.patch('/:id', getCommand, async (req, res) => {
+  router.put('/:id', getCommand, async (req, res) => {
     if (req.body.user != null) {
       res.command.user = req.body.user;
     }
@@ -63,7 +63,8 @@ router.get('/getall', async (req, res) => {
   // DELETE a command
   router.delete('/:id', getCommand, async (req, res) => {
     try {
-      await res.command.remove();
+      await     Command.findOneAndDelete({_id:res.command._id})
+      ;
       res.json({ message: 'Command deleted successfully' });
     } catch (err) {
       res.status(500).json({ message: err.message });

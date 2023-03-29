@@ -18,6 +18,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 
 
 import style from './order.module.css'
+import { updateCommand } from '../../../Redux/commandSlice';
+import { useDispatch } from 'react-redux';
 
 export default function FormDialog(props) {
     
@@ -27,12 +29,23 @@ export default function FormDialog(props) {
     
   
     const [payment, setPayment] = React.useState('');
-
+    const [date, setdate] = React.useState('');
+    const [status, setstatus] = React.useState('');
+  const dispatch=useDispatch()
   const handleChange = (event) => {
     setPayment(event.target.value);
   };
-  const [value, setValue] = React.useState(dayjs('2022-04-07'));
-
+  const handleSave = async () => {
+    // Call the updateProduct function with the new product data
+    await dispatch(updateCommand({
+      _id:props.command._id,
+      payment_methode:payment=='' ? props.command.payment_methode : payment,
+      status:status=='' ? props.command.status : status,
+      delivery_date:date==''? props.command.dilevry_date : date,
+    }));
+    console.log(props.command._id)
+    props.close()
+  };
 
   return (
     <div>
@@ -46,7 +59,7 @@ export default function FormDialog(props) {
               <Select
                 native
                 value={payment}
-                onChange={handleChange}
+                onChange={(e)=>setPayment(e.target.value)}
                 input={<OutlinedInput label="Payment Method" id="demo-dialog-native" />}
               >
                 <option aria-label="None" value="" />
@@ -55,29 +68,13 @@ export default function FormDialog(props) {
                 <option value={30}>Thirty</option>
               </Select>
             </FormControl>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <InputLabel id="demo-dialog-select-label">Payment Price</InputLabel>
-              <Select
-                labelId="demo-dialog-select-label"
-                id="demo-dialog-select"
-                value={payment}
-                onChange={handleChange}
-                input={<OutlinedInput label="Payment Method" />}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
+           
             <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
-        label="Delivery state"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
+        label="Delivery date"
+        value={date}
+        onChange={(e) => {
+          setdate(e.target.value);
         }}
         renderInput={(params) => <TextField {...params} />}
       />
@@ -88,8 +85,8 @@ export default function FormDialog(props) {
               <Select
                 labelId="demo-dialog-select-label"
                 id="demo-dialog-select"
-                value={payment}
-                onChange={handleChange}
+                value={status}
+                onChange={(e)=>setstatus(e.target.value)}
                 input={<OutlinedInput label="Delivery state" />}
               >
                 <MenuItem value="">
@@ -104,7 +101,7 @@ export default function FormDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.close}>Cancel</Button>
-          <Button onClick={props.close}>Ok</Button>
+          <Button onClick={handleSave}>Ok</Button>
         </DialogActions>
       </Dialog>
     </div>

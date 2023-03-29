@@ -11,6 +11,8 @@ import Slide from '@mui/material/Slide';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useDispatch, useSelector } from 'react-redux';
+import { addProduct } from '../../../Redux/ProductsSlice'; 
 
 
 import { InputLabel, MenuItem, Select } from '@mui/material';
@@ -21,17 +23,29 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Edit(props) {
   const [open, setOpen] = React.useState(false);
+  const user = useSelector((state) => state.users.user);
 
-  
-
-  const handleClose = () => {
-    setOpen(false);
+  const [formData, setFormData] = React.useState({
+    name: '',
+    category: '',
+    description: '',
+    price: '',
+    imageUrl: '',
+    inventory: '',
+    user_id:user._id
+  });
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(addProduct(formData));
   };
+
+ 
   const [age, setAge] = React.useState('');
 
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  const dispatch = useDispatch();
 
 
   return (
@@ -52,9 +66,9 @@ export default function Edit(props) {
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
               New Product
             </Typography>
-            <Button autoFocus color="primary" onClick={props.close} variant="contained">
-              save
-            </Button>
+            <Button autoFocus color="primary" onClick={handleSubmit} variant="contained">
+  Save
+</Button>
           </Toolbar>
         <Box
       sx={{
@@ -65,37 +79,80 @@ export default function Edit(props) {
 
       }}
     >
-      <InputLabel id="demo-simple-select-label">Product Name</InputLabel>
-      <TextField fullWidth  id="fullWidth" />
-      <InputLabel id="demo-simple-select-label">Categoory</InputLabel>
-  <Select
-    labelId="demo-simple-select-label"
-    id="demo-simple-select"
-    value={age}
-    onChange={handleChange}
-    fullWidth
+     <InputLabel id="demo-simple-select-label">Product Name</InputLabel>
+<TextField
+  fullWidth
+  id="fullWidth"
+  value={formData.name}
+  onChange={(event) =>
+    setFormData({ ...formData, name: event.target.value })
+  }
+/>
+<InputLabel id="demo-simple-select-label">Category</InputLabel>
+<Select
+  labelId="demo-simple-select-label"
+  id="demo-simple-select"
+  value={formData.category}
+  onChange={(event) =>
+    setFormData({ ...formData, category: event.target.value })
+  }
+  fullWidth
+>
+  <MenuItem value="category1">Category 1</MenuItem>
+  <MenuItem value="category2">Category 2</MenuItem>
+  <MenuItem value="category3">Category 3</MenuItem>
+</Select>
+<InputLabel id="demo-simple-select-label">Description</InputLabel>
+<TextField
+  id="outlined-multiline-flexible"
+  multiline
+  maxRows={4}
+  fullWidth
+  value={formData.description}
+  onChange={(event) =>
+    setFormData({ ...formData, description: event.target.value })
+  }
+/>
+<InputLabel id="demo-simple-select-label">Price</InputLabel>
+<TextField
+  fullWidth
+  id="fullWidth"
+  type="number"
+  value={formData.price}
+  onChange={(event) =>
+    setFormData({ ...formData, price: event.target.value })
+  }
+/>
+<InputLabel id="demo-simple-select-label">Image</InputLabel>
+<input
+  accept="image/*"
+  id="icon-button-file"
+  type="file"
+  style={{ display: 'none' }}
+  onChange={(event) =>
+    setFormData({ ...formData, imageUrl: event.target.files[0] })
+  }
+/>
+<label htmlFor="icon-button-file">
+  <IconButton
+    color="primary"
+    aria-label="upload picture"
+    component="span"
   >
-    <MenuItem value={10}>Ten</MenuItem>
-    <MenuItem value={20}>Twenty</MenuItem>
-    <MenuItem value={30}>Thirty</MenuItem>
-  </Select>
-  <InputLabel id="demo-simple-select-label">Description</InputLabel>
+    <PhotoCamera />
+  </IconButton>
+</label>
+<InputLabel id="demo-simple-select-label">Inventory</InputLabel>
+<TextField
+  fullWidth
+  id="fullWidth"
+  type="number"
+  value={formData.inventory}
+  onChange={(event) =>
+    setFormData({ ...formData, inventory: event.target.value })
+  }
+/>
 
-  <TextField
-          id="outlined-multiline-flexible"
-          multiline
-          maxRows={4}
-          fullWidth
-        />
-      <InputLabel id="demo-simple-select-label"  >Price</InputLabel>
-
-    <TextField fullWidth  id="fullWidth" type='number' />
-    <InputLabel id="demo-simple-select-label">image</InputLabel>
-
-    <IconButton color="primary" aria-label="upload picture" component="label">
-  <input hidden accept="image/*" type="file" />
-  <PhotoCamera />
-</IconButton>
     </Box>
         </Box>
           

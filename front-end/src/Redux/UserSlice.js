@@ -9,7 +9,7 @@ const initialState = {
   token: null,
 };
 export const loginUser = createAsyncThunk('auth/loginUser', async (userData) => {
-    const response = await axios.post('http://127.0.0.1:3001/user/register', userData);
+    const response = await axios.post('http://127.0.0.1:3001/user/login', userData);
     return response.data;
   });
 
@@ -152,11 +152,7 @@ const usersSlice = createSlice({
           .addCase(loginUser.fulfilled, (state, action) => {
             state.status = 'succeeded';
             state.token = action.payload.mytoken;
-            state.user = {
-              _id: action.payload._id,
-              email: action.payload.email,
-              name: action.payload.name,
-            };
+            state.user = action.payload.user
           })
           .addCase(loginUser.rejected, (state, action) => {
             state.status = 'failed';

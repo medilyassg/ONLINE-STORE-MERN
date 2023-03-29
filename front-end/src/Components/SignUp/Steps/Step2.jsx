@@ -12,14 +12,7 @@ export default function Step2() {
                             <h1>Create your account</h1>
                             <p>What would you like to name your store?</p>
                         </div>
-                        <div className={style.formItem}>
-                            <label htmlFor="">Store name</label>
-                            <input type="text" />
-                        </div>
-                        <div className={style.lastItem}>
-                            <input type="checkbox" name="" id="" />
-                            <label htmlFor="">I'm not a seller</label>
-                        </div>
+                        
                         
                         <div className={style.fromButton}>
                             <button onClick={()=>{navigate('/SignUp/step3')

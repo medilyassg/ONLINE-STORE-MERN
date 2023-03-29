@@ -3,12 +3,14 @@ const Schema = mongoose.Schema;
 
 // Define the command schema
 const commandSchema = new Schema({
-  user: [{
+  user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true
   }
-],
+,
+to_user:{
+  type:Schema.Types.ObjectId
+},
   products: [
     {
       type: Schema.Types.ObjectId,
@@ -21,8 +23,15 @@ const commandSchema = new Schema({
   },
   status: {
     type: String,
-    enum: ['pending', 'processing', 'shipped', 'delivered'],
+    
     default: 'pending'
+  },
+  payment_methode:{
+    type:String
+  },
+  delivery_date:{
+    type: Date,
+    default: Date.now
   },
   createdAt: {
     type: Date,

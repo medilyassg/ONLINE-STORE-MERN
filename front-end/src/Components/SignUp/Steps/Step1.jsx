@@ -2,9 +2,24 @@ import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import style from '../SignUp.module.css'
+import { useDispatch } from 'react-redux'
+import { registerUser } from '../../../Redux/UserSlice'
+
 export default function Step1() {
+
     const navigate=useNavigate()
+    const dispatch = useDispatch()
+
     const [ActiveEyes, setActiveEyes] = useState(false);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [storeName, setStoreName] = useState("");
+    const [isSeller, setIsSeller] = useState(false);
+    const [agreeToTerms, setAgreeToTerms] = useState(false);
+  
+
     const eyes=()=>{
         if(ActiveEyes){
             return <FaEye  className={style.icon} onClick={()=>{
@@ -20,53 +35,74 @@ export default function Step1() {
                  }}/>
          }
     }
-  return (
-    <React.Fragment>
-        <h1 className={style.title}>Create your account</h1>
-                <div >
-                    <div className={style.FirstItem}>
-                        <div>
-                            <label htmlFor="">First name</label>
-                            <input type="text" />
-                        </div>
-                        <div>
-                            <label htmlFor="">Last name</label>
-                            <input type="text" />
-                        </div>
-                    </div>
-                    <div className={style.formItem}>
-                        <label htmlFor="">Email</label>
-                        <input type="email" />
-                    </div>
-                    <div className={style.formItem}>
-                        <label htmlFor="">Password</label>
-                        <div className={style.password}>
-                            <input type={ActiveEyes? "text" : "password"} />
-                            {eyes()}
-                                
-                            
-                            
-                        </div>
-                        
-                    </div>
-                    <div className={style.lastItem}>
-                        <input type="checkbox" name="" id="" />
-                        <label htmlFor="">I agree to IlyCom terms and conditions of use</label>
-                    </div>
-                    <div className={style.fromButton}>
-                        <button onClick={()=>{
-                            navigate('/SignUp/step2')
-                    const step1=document.getElementById('step1')
-                    const StepNumber=document.getElementById('StepNumber')
-                    const StepNumberValue=Number(document.getElementById('StepNumber').innerHTML)
 
-                    StepNumber.innerHTML=StepNumberValue+1
-                    step1.style.backgroundColor='rgb(148, 55, 230)'
-                    }}>Continue</button>
+    const handleRegister = () => {
+        // check if user agrees to terms and conditions
+        if (!agreeToTerms) {
+            alert("Please agree to the terms and conditions.");
+            return;
+        }
+
+        // prepare data for registration
+        const user = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            password: password,
+            store_name: storeName,
+            role: isSeller ? 'seller' :'user'
+        };
+
+        // dispatch the register action
+        dispatch(registerUser(user));
+        alert('success')
+        navigate('/signin')
+    };
+
+    return (
+        <React.Fragment>
+
+       
+            <h1 className={style.title}>Create your account</h1>
+            <div>
+                <div className={style.FirstItem}>
+                    <div>
+                        <label htmlFor="">First name</label>
+                        <input type="text" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
                     </div>
-                    <hr />
-                    <p>Already have an account? <Link to='/SignIn'>Log in</Link></p>
+                    <div>
+                        <label htmlFor="">Last name</label>
+                        <input type="text" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    </div>
                 </div>
-    </React.Fragment>
-  )
+                <div className={style.formItem}>
+                    <label htmlFor="">Email</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className={style.formItem}>
+                    <label htmlFor="">Password</label>
+                    <div className={style.password}>
+                        <input type={ActiveEyes? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} />
+                        {eyes()}
+                    </div>
+                </div>
+                <div className={style.formItem}>
+                    <label htmlFor="">Store name</label>
+                    <input type="text" value={storeName} onChange={(e) => setStoreName(e.target.value)} />
+                </div>
+                <div className={style.lastItem}>
+                    <input type="checkbox" name="" id="" checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} />
+                    <label htmlFor="">I'm not a seller</label>
+                </div>
+                <div className={style.lastItem}>
+                    <input type="checkbox" name="" id="" checked={agreeToTerms} onChange={(e) => setAgreeToTerms(e.target.checked)} />
+<label htmlFor="">I agree to the <Link to="/">terms and conditions</Link></label>
+</div>
+<div className={style.buttonContainer}>
+<button className={style.btn} type='button' onClick={handleRegister}>Continue</button>
+<p className={style.loginLink} onClick={() => navigate("/login")}>Already have an account? Login</p>
+</div>
+</div>
+</React.Fragment>
+);
 }

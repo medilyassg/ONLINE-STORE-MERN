@@ -4,7 +4,6 @@ import { Outlet } from 'react-router-dom';
 import style from './SignUp.module.css'
 import Step1 from './Steps/Step1';
 import Step2 from './Steps/Step2';
-import Step3 from './Steps/Step3';
 export default function SignUp() {
     
   return (

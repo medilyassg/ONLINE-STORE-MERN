@@ -38,10 +38,11 @@ const jwt=require('jsonwebtoken')
             payload={
                 _id:user._id,
                 email:user.email,
-                name:user.name
-            }
+                name:user.name,
+                role:user.role
+            }   
             token=jwt.sign(payload,'11111')
-            res.status(200).send({mytoken:token})
+            res.status(200).send({mytoken:token,user:payload})
         }
     }
  })

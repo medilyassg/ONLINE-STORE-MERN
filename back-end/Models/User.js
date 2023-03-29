@@ -3,10 +3,14 @@ const Schema = mongoose.Schema;
 
 // Define the user schema
 const userSchema = new Schema({
-  name: {
+  first_name: {
     type: String,
-    required: true
   },
+  
+  last_name: {
+    type: String,
+  },
+  
   email: {
     type: String,
     required: true,
@@ -18,13 +22,14 @@ const userSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
     default: 'user'
   },
   createdAt: {
     type: Date,
     default: Date.now()
-  }
+  },
+  store_name: {type : String}
+  
 });
 
 const User = mongoose.model('User', userSchema);

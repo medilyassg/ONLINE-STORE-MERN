@@ -17,7 +17,6 @@ import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import Step1 from './Components/SignUp/Steps/Step1';
 import Step2 from './Components/SignUp/Steps/Step2';
-import Step3 from './Components/SignUp/Steps/Step3';
 import UserDashbord from './Components/UserDashbord/ShoppingCard';
 import Card from './Components/UserDashbord/ShoppingCard/ShoppingCard';
 
@@ -34,7 +33,6 @@ function App() {
         <Route path='SignUp' element={<SignUp />} >
           <Route index element={<Step1 />} />
           <Route path='step2' element={<Step2 />} />
-          <Route path='step3' element={<Step3 />} />
         </Route>
         <Route path='SignIn' element={<SignIn />} />
         <Route path='/ForgotPassword' element={<ForgotPassword />} />

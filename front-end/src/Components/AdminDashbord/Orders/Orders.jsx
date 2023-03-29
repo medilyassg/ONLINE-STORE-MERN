@@ -11,67 +11,52 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import FormDialog from './UpdateOrder';
-import { Button } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
+import { Button, IconButton } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { deleteCommand, fetchCommands } from '../../../Redux/commandSlice'; 
+import { useState } from 'react';
 
 
 
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(2, '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
-
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 export default function Orders() {
-  const [value, setValue] = React.useState('one');
+  const dispatch = useDispatch();
+  const commands = useSelector((state) => state.commandes.commands);
+  const [selectedCommand, setSelectedCommand] = useState(null);
+  const [openConfirmation, setOpenConfirmation] = useState(false);
 
+useEffect(() => {
+  dispatch(fetchCommands());
+}, [dispatch]);
+const deleteCommande = (command) => {
+  dispatch(deleteCommand(command._id));
+  dispatch(fetchCommands());
+
+}
+  const [value, setValue] = React.useState('one');
+  const [commandtoedit, setcommandtoedit] = useState('');
+  const handleClickOpen = (command) => {
+    setOpen(true);
+    setcommandtoedit(command)
+  };
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+ 
   const handleClose = () => {
     setOpen(false);
   };
@@ -99,33 +84,66 @@ export default function Orders() {
         <TableHead>
           <TableRow>
             <TableCell>Order ID</TableCell>
-            <TableCell>Customer</TableCell>
-            <TableCell>Order</TableCell>
+            <TableCell>Price</TableCell>
             <TableCell>Payment Method</TableCell>
-            
-            <TableCell>Delivery Date</TableCell>
+            <TableCell>order Date</TableCell>
             <TableCell >Delivery Date</TableCell>
             <TableCell >Delivery Status</TableCell>
+            <TableCell >actions</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`$${row.amount}`}</TableCell>
-              <TableCell><Button variant="outlined" onClick={handleClickOpen}>
-        update
-      </Button></TableCell>
-            </TableRow>
-          ))}
+        {commands.filter(item=>item.to_user!=='642180b2d0a9659feba6c8ea').map((command) => (
+  <TableRow key={command._id}>
+    <TableCell>{command._id}</TableCell>
+    <TableCell>{command.totalAmount}</TableCell>
+    <TableCell>{command.payment_methode}</TableCell>
+    <TableCell>{command.createdAt}</TableCell>
+    <TableCell align="right">{command.delivery_date}</TableCell>
+    <TableCell align="right">{command.status}</TableCell>
+    <TableCell>
+    <IconButton variant="soft" color='error' onClick={() => {
+  setSelectedCommand(command);
+  setOpenConfirmation(true);
+}}>
+  <DeleteOutlineIcon />
+</IconButton>
+      <IconButton variant="soft" color='success' onClick={()=>handleClickOpen(command)}>
+        <ModeEditIcon />
+      </IconButton>
+    </TableCell>
+  </TableRow>
+))}
+
         </TableBody>
       </Table>
-            <FormDialog open={open} close={handleClose} />
+            <FormDialog open={open} close={handleClose} command={commandtoedit}/>
       </Paper>
+      <Dialog
+  open={openConfirmation}
+  onClose={() => setOpenConfirmation(false)}
+>
+  <DialogTitle>Confirm deletion</DialogTitle>
+  <DialogContent>
+    <DialogContentText>
+      Are you sure you want to delete this command?
+    </DialogContentText>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={() => setOpenConfirmation(false)}>Cancel</Button>
+    <Button
+      onClick={() => {
+        deleteCommande(selectedCommand);
+        setOpenConfirmation(false);
+      }}
+      color="error"
+    >
+      Delete
+    </Button>
+  </DialogActions>
+</Dialog>
+
 
     </React.Fragment>
   );

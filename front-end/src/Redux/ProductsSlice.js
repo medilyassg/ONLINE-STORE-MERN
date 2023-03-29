@@ -13,16 +13,8 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
 });
 
 export const addProduct = createAsyncThunk('products/addProduct', async (product) => {
-  const formData = new FormData();
-  formData.append('name', product.name);
-  formData.append('description', product.description);
-  formData.append('price', product.price);
-  formData.append('imageUrl', product.imageUrl);
-  const response = await axios.post('http://127.0.0.1:3001/product/addProduct', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data'
-    }
-  });
+  
+  const response = await axios.post('http://127.0.0.1:3001/product/addProduct', product);
   return response.data;
 });
 

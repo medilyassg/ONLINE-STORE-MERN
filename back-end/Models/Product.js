@@ -26,7 +26,11 @@ const productSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  inventory:{
+    type:Number
+  },
+  user_id:Schema.Types.ObjectId
 });
 
 // Define the product model

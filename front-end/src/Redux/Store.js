@@ -4,10 +4,10 @@ import productreducer from './ProductsSlice'
 import commandereducer from './commandSlice'
 import costumerreducer from './costumerSlice'
 const reducer= combineReducers({
-    'user': userreducer,
-    'product':productreducer,
-    'commande':commandereducer,
-    'costumer':costumerreducer
+    'users': userreducer,
+    'products':productreducer,
+    'commandes':commandereducer,
+    'costumers':costumerreducer
 
 });
 const store=configureStore({reducer})
