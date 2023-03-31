@@ -1,145 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './Customers.module.css'
+import { useSelector, useDispatch } from 'react-redux'
+import { getAllCustomers } from '../../../Redux/costumerSlice';
+
 export default function Customers() {
-  return (
-    <div className={style.customers}>
-      <h3>Customers (5)</h3>
-      <div className={style.list}>
-        <div className={style.customer}> 
+const dispatch = useDispatch();
+const customers = useSelector(state => state.customers.customers);
+useEffect(() => {
+  dispatch(getAllCustomers());
+}, [dispatch]);
+return (
+  <div className={style.customers}>
+    <h3>Customers ({customers.length})</h3>
+    <div className={style.list}>
+      {customers.map(customer => (
+        <div className={style.customer} key={customer.id}> 
           <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
+            <img src='https://unsplash.com/fr/photos/rDEOVtE7vOs' alt="" />
           </div>
           <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
+            <h3>{customer.name}</h3>
+            <p>Email : <a href={`mailto: ${customer.email}`}>{customer.email}</a></p>
+            <p>Phone : <a href={`tel: ${customer.phone}`}>{customer.phone}</a></p>
           </div>
-          
         </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        <div className={style.customer}> 
-          <div className={style.customerimg}>
-            <img src={require('../../Images/charts.png')} alt="" />
-          </div>
-          <div className={style.customerinfo}>
-            <h3>Cutomer name</h3>
-            <p>Email : <a href = "mailto: abc@example.com">abc@example.com</a></p>
-            <p>Phone : <a href="tel:0655176045">0655176045</a> </p>
-          </div>
-          
-        </div>
-        
-        
-      </div>
+      ))}
     </div>
-  )
+  </div>
+)
+
 }

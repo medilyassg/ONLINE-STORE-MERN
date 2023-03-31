@@ -5,13 +5,13 @@ import Paper from '@mui/material/Paper';
 import Deposits from './Deposits';
 import Orders from './Order';
 import { Copyright } from './Dashbord';
+import Chart from './Chart';
 
 export default function DashbordIndex() {
   return (
     <React.Fragment>
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -21,7 +21,7 @@ export default function DashbordIndex() {
                     height: 240,
                   }}
                 >
-                  {/* <Chart /> */}
+                  <Chart />
                 </Paper>
               </Grid>
               {/* Recent Deposits */}

@@ -7,7 +7,7 @@ const reducer= combineReducers({
     'users': userreducer,
     'products':productreducer,
     'commandes':commandereducer,
-    'costumers':costumerreducer
+    'customers':costumerreducer
 
 });
 const store=configureStore({reducer})

@@ -22,7 +22,7 @@ export default function SignIn() {
     if(error) alert('email or password not correct')
     if(user !==null){
         console.log(user._id)
-        if (user.role !== "seller") {
+        if (user.role == "seller") {
             navigate("/dashbord");
           } else {
             navigate("/user");

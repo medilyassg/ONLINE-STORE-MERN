@@ -17,7 +17,7 @@ export const getAllCustomers = createAsyncThunk(
   'customers/getAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get('/api/customers/getall');
+      const response = await axios.get('http://127.0.0.1:3001/customer/getall');
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
