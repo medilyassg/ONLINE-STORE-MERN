@@ -8,28 +8,28 @@ const initialState = {
 };
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('http://127.0.0.1:3001/product/getall');
+  const response = await axios.get('http://127.0.0.1:3002/product/getall');
   return response.data;
 });
 
 export const addProduct = createAsyncThunk('products/addProduct', async (product) => {
   
-  const response = await axios.post('http://127.0.0.1:3001/product/addProduct', product);
+  const response = await axios.post('http://127.0.0.1:3002/product/addProduct', product);
   return response.data;
 });
 
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId) => {
-  const response = await axios.delete(`http://127.0.0.1:3001/product/deletebyid/${productId}`);
+  const response = await axios.delete(`http://127.0.0.1:3002/product/deletebyid/${productId}`);
   return response.data;
 });
 
 export const updateProduct = createAsyncThunk('products/updateProduct', async (product) => {
-  const response = await axios.put(`http://127.0.0.1:3001/product/update/${product._id}`, product);
+  const response = await axios.put(`http://127.0.0.1:3002/product/update/${product._id}`, product);
   return response.data;
 });
 
 export const getProductById = createAsyncThunk('products/getProductById', async (productId) => {
-  const response = await axios.get(`http://127.0.0.1:3001/product/getidproduct/${productId}`);
+  const response = await axios.get(`http://127.0.0.1:3002/product/getidproduct/${productId}`);
   return response.data;
 });
 

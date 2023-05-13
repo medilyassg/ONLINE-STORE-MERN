@@ -9,12 +9,12 @@ const initialState = {
   token: null,
 };
 export const loginUser = createAsyncThunk('auth/loginUser', async (userData) => {
-    const response = await axios.post('http://127.0.0.1:3001/user/login', userData);
+    const response = await axios.post('http://127.0.0.1:3000/user/login', userData);
     return response.data;
   });
 
 export const registerUser = createAsyncThunk('auth/registerUser', async (userData) => {
-    const response = await axios.post('http://127.0.0.1:3001/user/register', userData);
+    const response = await axios.post('http://127.0.0.1:3000/user/register', userData);
     return response.data;
   });
   
@@ -22,7 +22,7 @@ export const registerUser = createAsyncThunk('auth/registerUser', async (userDat
 export const fetchAllUsers = createAsyncThunk(
   'users/fetchAllUsers',
   async () => {
-    const response = await axios.get('http://127.0.0.1:3001/user/getall');
+    const response = await axios.get('http://127.0.0.1:3000/user/getall');
     return response.data;
   }
 );
@@ -31,7 +31,7 @@ export const fetchAllUsers = createAsyncThunk(
 export const fetchUserById = createAsyncThunk(
   'users/fetchUserById',
   async (name) => {
-    const response = await axios.get(`/http://127.0.0.1:3001/user/getbyid/${name}`);
+    const response = await axios.get(`/http://127.0.0.1:3000/user/getbyid/${name}`);
     return response.data;
   }
 );
@@ -40,7 +40,7 @@ export const fetchUserById = createAsyncThunk(
 export const updateUser = createAsyncThunk(
   'users/updateUser',
   async ({ id, newData }) => {
-    const response = await axios.put(`http://127.0.0.1:3001/user/put/${id}`, newData);
+    const response = await axios.put(`http://127.0.0.1:3000/user/put/${id}`, newData);
     return response.data;
   }
 );
@@ -49,7 +49,7 @@ export const updateUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'users/deleteUser',
   async (id) => {
-    const response = await axios.delete(`http://127.0.0.1:3001/user/delete/${id}`);
+    const response = await axios.delete(`http://127.0.0.1:3000/user/delete/${id}`);
     return response.data;
   }
 );
@@ -57,7 +57,12 @@ export const deleteUser = createAsyncThunk(
 const usersSlice = createSlice({
     name: 'users',
     initialState,
-    reducers: {},
+    reducers: {
+      logout: (state) => {
+        // Reset the auth state to initial values
+        state.user = null;
+      },
+    },
     extraReducers: (builder) => {
       builder
         // Fetch all users
@@ -160,6 +165,7 @@ const usersSlice = createSlice({
           });
     },
   });
-  
+  export const { logout } = usersSlice.actions;
+
   export default usersSlice.reducer;
   

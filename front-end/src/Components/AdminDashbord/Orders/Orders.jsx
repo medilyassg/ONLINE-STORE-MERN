@@ -94,7 +94,7 @@ const deleteCommande = (command) => {
           </TableRow>
         </TableHead>
         <TableBody>
-        {commands.filter(item=>item.to_user!=='642180b2d0a9659feba6c8ea').map((command) => (
+        {commands.map((command) => (
   <TableRow key={command._id}>
     <TableCell>{command._id}</TableCell>
     <TableCell>{command.totalAmount}</TableCell>

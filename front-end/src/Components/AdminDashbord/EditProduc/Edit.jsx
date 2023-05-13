@@ -41,7 +41,6 @@ export default function Edit(props) {
       price:price =='' ? props.product.price : price,
       inventory:inventory =='' ? props.product.inventory : inventory,
       imageUrl:props.product.imageUrl ,
-      user_id:props.product.user_id
     }));
     props.close()
   };

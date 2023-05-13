@@ -3,18 +3,14 @@ const Schema = mongoose.Schema;
 
 // Define the command schema
 const commandSchema = new Schema({
-  user: {
+  user_id: {
     type: Schema.Types.ObjectId,
-    ref: 'User',
   }
 ,
-to_user:{
-  type:Schema.Types.ObjectId
-},
+
   products: [
     {
       type: Schema.Types.ObjectId,
-      ref: 'Product'
     }
   ],
   totalAmount: {
@@ -40,6 +36,6 @@ to_user:{
 });
 
 // Define the command model
-const Command = mongoose.model('Command', commandSchema);
+const Command = mongoose.model('orders', commandSchema);
 
 module.exports = Command;

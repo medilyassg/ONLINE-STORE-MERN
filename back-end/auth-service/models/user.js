@@ -28,7 +28,6 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-  store_name: {type : String}
   
 });
 

@@ -12,7 +12,6 @@ import { fetchProducts } from '../../../Redux/ProductsSlice';
 export default function Productslist() {
   const dispatch = useDispatch();
   const [age, setAge] = React.useState('');
-  const user = useSelector((state) => state.users.user);
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -52,7 +51,7 @@ const deleteproduct=(id)=>{
           <p className={style.date}>Date Added</p>
         </div>
         <div className={style.items}>
-          {products.filter(item=>item.user_id=='642180b2d0a9659feba6c8ea').map((product) => (
+          {products.map((product) => (
             <div className={style.item} key={product.id}>
               <p className={style.name}>{product.name}</p>
               <p className={style.category}>{product.category}</p>

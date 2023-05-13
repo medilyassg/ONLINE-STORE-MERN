@@ -10,6 +10,9 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../Redux/UserSlice'; // Assuming you have an auth slice
+import {  useNavigate } from 'react-router-dom';
 
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -88,7 +91,17 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+    const dispatch = useDispatch();
+    const navigate = useNavigate()
+  
+    const handleLogout = () => {
+      dispatch(logout()); // Dispatch the logout action
+      navigate('/signin'); // Redirect to the sign-in page
 
+    };
+
+  
+  
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -121,7 +134,7 @@ function DashboardContent() {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={handleLogout}>
               <Badge badgeContent={4} color='error'>
                 <NotificationsIcon />
               </Badge>

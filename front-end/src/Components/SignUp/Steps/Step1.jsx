@@ -49,8 +49,6 @@ export default function Step1() {
             last_name: lastName,
             email: email,
             password: password,
-            store_name: storeName,
-            role: isSeller ? 'seller' :'user'
         };
 
         // dispatch the register action
@@ -86,14 +84,8 @@ export default function Step1() {
                         {eyes()}
                     </div>
                 </div>
-                <div className={style.formItem}>
-                    <label htmlFor="">Store name</label>
-                    <input type="text" value={storeName} onChange={(e) => setStoreName(e.target.value)} />
-                </div>
-                <div className={style.lastItem}>
-                    <input type="checkbox" name="" id="" checked={isSeller} onChange={(e) => setIsSeller(e.target.checked)} />
-                    <label htmlFor="">I'm not a seller</label>
-                </div>
+
+                
                 <div className={style.lastItem}>
                     <input type="checkbox" name="" id="" checked={agreeToTerms} onChange={(e) => setAgreeToTerms(e.target.checked)} />
 <label htmlFor="">I agree to the <Link to="/">terms and conditions</Link></label>

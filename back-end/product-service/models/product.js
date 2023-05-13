@@ -30,7 +30,6 @@ const productSchema = new Schema({
   inventory:{
     type:Number
   },
-  user_id:Schema.Types.ObjectId
 });
 
 // Define the product model

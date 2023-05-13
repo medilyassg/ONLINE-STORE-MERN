@@ -23,7 +23,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function Edit(props) {
   const [open, setOpen] = React.useState(false);
-  const user = useSelector((state) => state.users.user);
 
   const [formData, setFormData] = React.useState({
     name: '',
@@ -32,7 +31,6 @@ export default function Edit(props) {
     price: '',
     imageUrl: '',
     inventory: '',
-    user_id:user._id
   });
   const handleSubmit = (event) => {
     event.preventDefault();
