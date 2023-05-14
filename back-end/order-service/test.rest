@@ -1,0 +1,11 @@
+###
+
+POST http://localhost:3003/command/createCommand  
+
+Content-Type: application/json
+{
+    "user_id":"645f5289901ca47ad0bbe9d7",
+    "products":["645b82cf8df580a4bcbd3db8","645b8604201ebdb3c4310a0d"],
+    "totalAmount":100,
+    "payment_methode":"cash on dilevry"
+}

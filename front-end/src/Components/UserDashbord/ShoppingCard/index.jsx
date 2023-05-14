@@ -20,6 +20,9 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Products from '../../Products/Products';
 import ShoppingCart from './ShoppingCard';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../Redux/UserSlice';
 
 
 
@@ -69,7 +72,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function UserDashbord() {
-  
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    dispatch(logout()); // Dispatch the logout action
+    navigate('/signin'); // Redirect to the sign-in page
+
+  };
     const [state, setState] = React.useState({
         top: false,
         left: false,
@@ -129,10 +139,10 @@ export default function UserDashbord() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleLogout}>log out</MenuItem>
     </Menu>
   );
-
+  
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -150,31 +160,9 @@ export default function UserDashbord() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" >
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-    <MenuItem>
-            <IconButton size="large" color="inherit" aria-label="add to shopping cart" >
-            </IconButton> 
-            <p>lll</p>   
-</MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+
+    
+      
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -238,11 +226,7 @@ export default function UserDashbord() {
             <AddShoppingCartIcon />
 
             </IconButton> 
-            <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
+
             
             
             <IconButton

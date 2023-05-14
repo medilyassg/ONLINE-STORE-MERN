@@ -1,22 +1,38 @@
 const express=require('express');
 const router=express.Router();
 const Command=require('../models/command')
+const amqp = require('amqplib')
 
+var connexion , chanel
+const queuname = "email-service-queue"
+
+async function connectRabbitMQ(){
+  const amqpserver = "amqp://localhost";
+  connexion=await amqp.connect(amqpserver)
+  chanel= await connexion.createChannel()
+  await chanel.assertQueue(queuname)
+}
 
   
   // CREATE a command
   router.post('/createCommand', async (req, res) => {
     const command = new Command({
-      user: req.body.user,
+      user_id: req.body.user_id,
       products: req.body.products,
       totalAmount: req.body.totalAmount,
       status: req.body.status,
+      payment_methode:req.body.payment_methode,
       createdAt: req.body.createdAt
     });
   
     try {
-      const newCommand = await command.save();
-      res.status(201).json(newCommand);
+      connectRabbitMQ().then(()=>{
+        command.save();
+        res.status(201).json(command);
+        chanel.sendToQueue(queuname,Buffer.from(JSON.stringify(command)))
+      })
+
+      
     } catch (err) {
       res.status(400).json({ message: err.message });
     }

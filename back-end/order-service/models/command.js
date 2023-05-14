@@ -15,7 +15,6 @@ const commandSchema = new Schema({
   ],
   totalAmount: {
     type: Number,
-    required: true
   },
   status: {
     type: String,
