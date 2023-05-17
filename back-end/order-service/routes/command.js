@@ -5,9 +5,9 @@ const amqp = require('amqplib')
 
 var connexion , chanel
 const queuname = "email-service-queue"
-
+const queuname2= "costumer-service-queue"
 async function connectRabbitMQ(){
-  const amqpserver = "amqp://localhost";
+  const amqpserver = "amqp://guest:guest@rabbit:5672";
   connexion=await amqp.connect(amqpserver)
   chanel= await connexion.createChannel()
   await chanel.assertQueue(queuname)
@@ -30,6 +30,7 @@ async function connectRabbitMQ(){
         command.save();
         res.status(201).json(command);
         chanel.sendToQueue(queuname,Buffer.from(JSON.stringify(command)))
+        chanel.sendToQueue(queuname2,Buffer.from(command.user_id))
       })
 
       

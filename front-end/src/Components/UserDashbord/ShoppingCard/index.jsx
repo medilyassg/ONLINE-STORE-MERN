@@ -6,7 +6,8 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,14 +16,13 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
-import Card from './ShoppingCard';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import Products from '../../Products/Products';
-import ShoppingCart from './ShoppingCard';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../../../Redux/UserSlice';
+import { addCommand } from '../../../Redux/commandSlice';
+import { useState } from 'react';
 
 
 
@@ -72,9 +72,87 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function UserDashbord() {
+  
+  const cartContainerStyle = {
+    border: '1px solid #ddd',
+    padding: '20px',
+    width: '70%',
+    margin: '0 auto',
+  };
+
+  const cartTitleStyle = {
+    fontSize: '24px',
+    textAlign: 'center',
+    marginBottom: '10px',
+  };
+
+  const cartItemsStyle = {
+    marginBottom: '20px',
+  };
+
+  const cartItemStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: '10px',
+  };
+
+  const cartItemNameStyle = {
+    fontWeight: 'bold',
+  };
+
+  const cartItemPriceStyle = {
+    color: '#555',
+  };
+
+  const cartTotalStyle = {
+    fontSize: '18px',
+    fontWeight: 'bold',
+    marginBottom: '10px',
+  };
+
+  const cartButtonStyle = {
+    backgroundColor: '#00a65a',
+    color: '#fff',
+    border: 'none',
+    padding: '10px 20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    transition: 'background-color 0.3s ease',
+  };
+
+  
+  const user = useSelector((state) => state.users.user);
+
+  const cartItems = useSelector((state) => state.products.cart);
+  
+  // Calculate the total price
+  const totalPrice = cartItems.reduce((total, item) => total + item.price, 0);
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const [showAlert, setShowAlert] = useState(false);
 
+  const handleCheckout = () => {
+    // // if (!user) {
+    // //   // User is not connected, handle the logic accordingly (e.g., show login modal, redirect to login page)
+    // //   navigate('/signin')
+    // //   return;
+    // }
+    // Create the command object with the required properties
+    const command = {
+      user_id: 123456789, // Set the user ID based on your application's logic
+      products: cartItems.map((item) => item._id),
+      totalAmount: totalPrice,
+      payment_methode: 'cash on delivery',
+    };
+
+    // Dispatch the addCommand action to send the command to the server
+    dispatch(addCommand(command));
+    toggleDrawer('right', false)
+    setShowAlert(true);
+
+    // Hide the alert after 3 seconds
+  };
+    // Optional: Reset the cart items or perform any other actions
   const handleLogout = () => {
     dispatch(logout()); // Dispatch the logout action
     navigate('/signin'); // Redirect to the sign-in page
@@ -223,7 +301,7 @@ export default function UserDashbord() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
           <IconButton size="large" color="inherit" aria-label="add to shopping cart" onClick={toggleDrawer('right', true)}>
-            <AddShoppingCartIcon />
+          <ShoppingCartIcon />
 
             </IconButton> 
 
@@ -264,8 +342,24 @@ export default function UserDashbord() {
             open={state['right']}
             onClose={toggleDrawer('right', false)}
             onOpen={toggleDrawer('right', true)}
+            
           >
-
+           <div style={cartContainerStyle}>
+      <h2 style={cartTitleStyle}>Cart</h2>
+      <div style={cartItemsStyle}>
+        {cartItems.map((item) => (
+          <div key={item.id} style={cartItemStyle}>
+            <p style={cartItemNameStyle}>{item.name}</p>
+            <p style={cartItemPriceStyle}>${item.price}</p>
+          </div>
+        ))}
+      </div>
+      <p style={cartTotalStyle}>Total Price: ${totalPrice}</p>
+      <button style={cartButtonStyle} onClick={handleCheckout}>
+        Checkout
+      </button>
+      
+    </div>
             {list('right')}
           </SwipeableDrawer>
         </React.Fragment>

@@ -9,7 +9,7 @@ export const fetchCommands = createAsyncThunk('commands/fetchCommands', async ()
 
 // Async Thunk for add command
 export const addCommand = createAsyncThunk('commands/addCommand', async (command) => {
-  const response = await axios.post('/api/commands', command);
+  const response = await axios.post('http://127.0.0.1:3003/command/createCommand', command);
   return response.data;
 });
 

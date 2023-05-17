@@ -17,7 +17,6 @@ import SignIn from './Components/SignIn/SignIn';
 import SignUp from './Components/SignUp/SignUp';
 import Step1 from './Components/SignUp/Steps/Step1';
 import UserDashbord from './Components/UserDashbord/ShoppingCard';
-import Card from './Components/UserDashbord/ShoppingCard/ShoppingCard';
 
 function App() {
   return (

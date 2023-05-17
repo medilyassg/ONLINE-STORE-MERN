@@ -35,13 +35,11 @@ export default function Step1() {
                  }}/>
          }
     }
+    const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
     const handleRegister = () => {
         // check if user agrees to terms and conditions
-        if (!agreeToTerms) {
-            alert("Please agree to the terms and conditions.");
-            return;
-        }
+
 
         // prepare data for registration
         const user = {
@@ -50,11 +48,14 @@ export default function Step1() {
             email: email,
             password: password,
         };
-
+        if(user.first_name !=""){
+            dispatch(registerUser(user));
+    
+           
+                     navigate('/signin')
+        }
         // dispatch the register action
-        dispatch(registerUser(user));
-        alert('success')
-        navigate('/signin')
+        
     };
 
     return (
@@ -92,6 +93,7 @@ export default function Step1() {
 </div>
 <div className={style.buttonContainer}>
 <button className={style.btn} type='button' onClick={handleRegister}>Continue</button>
+
 <p className={style.loginLink} onClick={() => navigate("/login")}>Already have an account? Login</p>
 </div>
 </div>

@@ -18,6 +18,6 @@ app.use('/command',commandRouter);
 
 
 
-app.listen(3003,()=>{
+app.listen(3000,()=>{
     console.log("server connexion --success")
 });

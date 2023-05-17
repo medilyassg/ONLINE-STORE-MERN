@@ -17,6 +17,6 @@ app.use('/product',productRouter);
 //3axan nxof foto
 app.use('/getimage',express.static('./uploads'));
 
-app.listen(3002,()=>{
+app.listen(3000,()=>{
     console.log("server connexion -- success")
 });

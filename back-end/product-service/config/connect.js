@@ -1,7 +1,7 @@
 const mongoose=require("mongoose");
 const url=process.env.MONGO_URI
 
-mongoose.connect('mongodb://127.0.0.1:27017/dbproducts').then(
+mongoose.connect('mongodb://mongo:27017/dbproducts').then(
     ()=>{
         console.log("db connexion --success")
     }

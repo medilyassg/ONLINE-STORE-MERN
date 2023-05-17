@@ -10,7 +10,6 @@ const userSchema = new Schema({
   last_name: {
     type: String,
   },
-  
   email: {
     type: String,
     required: true,

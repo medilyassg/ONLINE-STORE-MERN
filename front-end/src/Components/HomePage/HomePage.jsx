@@ -11,7 +11,7 @@ export default function HomePage() {
     <React.Fragment>
         <header className={style.header}>
             <div>
-                <h2>IlyCom</h2>
+                <h2>shope</h2>
                 <Link to='/features'>Features</Link>
                 <Link to='/products'>Products</Link>
                 <Link to='/contact'>Contact</Link>

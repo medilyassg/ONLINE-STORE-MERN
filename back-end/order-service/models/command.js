@@ -22,7 +22,8 @@ const commandSchema = new Schema({
     default: 'pending'
   },
   payment_methode:{
-    type:String
+    type:String,
+    default:"cash on dilevery"
   },
   delivery_date:{
     type: Date,

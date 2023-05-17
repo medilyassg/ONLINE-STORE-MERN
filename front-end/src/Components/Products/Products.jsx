@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import style from './Products.module.css'
 // import {VscListFilter} from 'react-icons/vsc'
 import Checkbox from '@mui/material/Checkbox';
@@ -12,10 +12,15 @@ import MobileStepper from '@mui/material/MobileStepper';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import { fetchProducts } from '../../Redux/ProductsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 export default function Products() {
     const theme = useTheme();
+    const dispatch = useDispatch();
+    const products = useSelector((state) => state.products.products);
+
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -25,6 +30,10 @@ export default function Products() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
   return (
     <React.Fragment     >
         <div className={style.parent}>
@@ -88,45 +97,14 @@ export default function Products() {
                     </FormControl>
                     </div>
                     <div className={style.products}>
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <Product />
-                        <MobileStepper
-      variant="dots"
-      steps={6}
-      color ="secondary"
-      position="static"
-      activeStep={activeStep}
-      sx={{ maxWidth: 1000, flexGrow: 1 }}
-      nextButton={
-        <Button size="small" onClick={handleNext} color ="secondary" disabled={activeStep === 5}>
-          Next
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowLeft />
-          ) : (
-            <KeyboardArrowRight />
-          )}
-        </Button>
-      }
-      backButton={
-        <Button size="small" onClick={handleBack} color ="secondary" disabled={activeStep === 0}>
-          {theme.direction === 'rtl' ? (
-            <KeyboardArrowRight />
-          ) : (
-            <KeyboardArrowLeft />
-          )}
-          Back
-        </Button>
-      }
-    />
+                    {products.map((product) => (
+                        <Product product={product} />
+
+                    ))}
+
+
+                        
+
                     </div>
                     
                 </div>

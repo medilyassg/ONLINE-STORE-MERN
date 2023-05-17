@@ -6,7 +6,7 @@ var nodemailer=require('nodemailer')
 
 const app=express()
 
-mongoose.connect('mongodb://localhost:27017/dbusers',{useNewUrlParser:true})
+mongoose.connect('mongodb://mongo:27017/dbusers',{useNewUrlParser:true})
         .then(()=>{console.log('db connexion --success');})
         .catch((err)=>{console.log('db connexion --error')})
 
@@ -16,7 +16,7 @@ var connexion , chanel
 const queuname="email-service-queue"
 
 async function connectRabbitMQ(){
-    const amqpServer = "amqp://localhost";
+    const amqpServer = "amqp://guest:guest@rabbit:5672";
     connexion=await amqp.connect(amqpServer)
     chanel = await connexion.createChannel();
     await chanel.assertQueue(queuname)
@@ -41,7 +41,7 @@ connectRabbitMQ().then(()=>{
         const user = userModel.find({ id: 1 });
         var mailoption={
             from:'elghazi.mohamed.ilyass@gmail.com',
-            to:'medilyass.ghazi@gmail.com',
+            to:user.email,
             subject:'Thank you for your order',
             text: `Dear ${user.first_name},\n` +
   `Thank you for choosing our service and placing an order with us. We are thrilled to serve you! Here are the details of your order:\n` +
@@ -71,6 +71,6 @@ connectRabbitMQ().then(()=>{
 })
 
 
-app.listen('3005',()=>{
+app.listen(3000,()=>{
     console.log('server connexion --success')
 })
